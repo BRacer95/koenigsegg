@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Koenigsegg Official</title>
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Orbitron font for premium look -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Add your custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #181818;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/7c/Koenigsegg_Ghost_Symbol.svg');
+            background-repeat: repeat;
+            background-size: 180px auto;
+            background-attachment: fixed;
+        }
+
+        header {
+            background-color: #181818;
+            color: #fff;
+            padding: 10px 0;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-link {
+            display: inline-block;
+            background: #fff;
+            border-radius: 12px;
+            padding: 4px 8px;
+            border: 2px solid #ffd700;
+            transition: box-shadow 0.2s, border-color 0.2s, background 0.2s;
+            margin-right: 10px;
+        }
+        .logo-link img {
+            height: 40px;
+            width: auto;
+            display: block;
+        }
+        .logo-link:hover,
+        .logo-link:focus {
+            box-shadow: 0 0 16px #ffd700, 0 0 8px #fff8;
+            border-color: #fff;
+            background: #ffd700;
+        }
+
+        nav {
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        /* Optional: Hide nav-links by default and only show when .open is present */
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: #222b36;
+            width: 180px;
+            border-radius: 8px;
+            padding: 10px 0;
+            box-shadow: 0 4px 24px #0008;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 100;
+        }
+        .nav-links.open {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        .nav-links li {
+            margin: 10px 0;
+            text-align: right;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 10px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            background-color: #222b36; /* Match hero/nav accent */
+            border-radius: 4px;
+            color: #ffd700;
+        }
+
+        .menu-toggle {
+            display: flex;
+            width: 36px;
+            height: 36px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            z-index: 1100;
+            background: none;
+            border: none;
+            margin-right: 20px;
+            margin-left: 10px;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 28px;
+            height: 4px;
+            margin: 4px 0;
+            background: #ffd700;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        /* Hamburger animation when open */
+        .nav-links.open ~ .menu-toggle span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .nav-links.open ~ .menu-toggle span:nth-child(2) {
+            opacity: 0;
+        }
+        .nav-links.open ~ .menu-toggle span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .hero {
+            background-color: #222b36; /* Deep blue-grey for a premium look */
+            color: #ffd700;            /* Koenigsegg gold for text */
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin: 10px 0 0;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+            padding: 32px 0;
+            justify-items: center;
+            background: none;
+        }
+
+        .card {
+            background: #10131a;
+            border: 2px solid #ffd700; /* Koenigsegg gold */
+            border-radius: 18px;
+            box-shadow: 0 4px 32px 0 #000a;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: 
+                transform 0.18s cubic-bezier(.4,2,.6,1),
+                box-shadow 0.18s cubic-bezier(.4,2,.6,1),
+                border-color 0.18s;
+            cursor: pointer;
+            max-width: 320px;
+            min-width: 220px;
+            padding-bottom: 12px;
+        }
+
+        .card img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 1px solid #222;
+            background: #181818;
+            transition: filter 0.2s;
+        }
+
+        .card:hover {
+            border-color: #fff;
+            box-shadow: 0 8px 48px 0 #ffd70088, 0 2px 24px #ff660088, 0 0 24px #fff4;
+            transform: translateY(-8px) scale(1.04);
+            background: #181818;
+        }
+
+        .model-name {
+            color: #ffd700;
+            font-family: 'Orbitron', Arial, sans-serif;
+            font-size: 1.18rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-align: center;
+            margin: 18px 0 10px 0;
+            text-shadow: 0 2px 8px #000a;
+            background: none;
+            border-radius: 0;
+            padding: 0;
+            transition: color 0.2s, background 0.2s, box-shadow 0.2s, padding 0.2s;
+        }
+
+        .card:hover .model-name {
+            color: #fff;
+            background: #ffd700;
+            padding: 6px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 16px #ffd70088, 0 0 8px #fff8;
+        }
+
+        .card-bullets {
+            list-style: disc inside;
+            color: #fff;
+            font-size: 1rem;
+            margin: 0 0 8px 0;
+            padding: 0 18px;
+            text-align: left;
+            font-family: 'Orbitron', Arial, sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .card-bullets li {
+            margin-bottom: 4px;
+            opacity: 0.92;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            nav {
+                position: relative;
+            }
+            .menu-toggle {
+                display: flex;
+            }
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 50px;
+                right: 0;
+                background-color: #222b36;
+                width: 180px;
+                border-radius: 8px;
+                padding: 10px 0;
+                box-shadow: 0 4px 24px #0008;
+                opacity: 0;
+                pointer-events: none;
+                transform: translateY(-10px);
+                transition: opacity 0.3s, transform 0.3s;
+            }
+            .nav-links.open {
+                opacity: 1;
+                pointer-events: auto;
+                transform: translateY(0);
+            }
+            .nav-links li {
+                margin: 10px 0;
+                text-align: right;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+        }
+
+        /* Enhanced ripple effect */
+        .card-ripple {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #ffd70088 0%, #ff660088 80%, transparent 100%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0.5);
+            animation: ripple-animate 0.7s linear forwards;
+            z-index: 10;
+            mix-blend-mode: lighten;
+        }
+        @keyframes ripple-animate {
+            to {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(2.5);
+            }
+        }
+
+        /* Modal styles */
+        .card-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+
+        .card-modal.show {
+            display: flex;
+        }
+
+        .card-modal-content {
+            background: #fff;
+            border-radius: 16px;
+            padding: 32px 24px 24px 24px;
+            box-shadow: 0 8px 48px #000a;
+            text-align: center;
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+            animation: popIn 0.3s cubic-bezier(.4,2,.6,1);
+        }
+
+        .card-modal-content img {
+            max-width: 320px;
+            max-height: 40vh;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 16px #0099cc55;
+        }
+
+        .card-modal-content h2 {
+            margin: 0;
+            color: #0a2342;
+            font-size: 1.5rem;
+        }
+
+        .card-modal-close {
+            position: absolute;
+            top: 10px; right: 18px;
+            font-size: 2rem;
+            color: #222b36; /* Accent for modal close */
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+
+        .card-modal-close:hover {
+            color: #ffd700; /* Koenigsegg gold */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ====== HEADER: Logo and Navigation ====== -->
+    <header>
+        <div class="logo">
+            <!-- Logo as a link for accessibility and visibility -->
+            <a href="#" class="logo-link">
+                <img src="https://images.seeklogo.com/logo-png/40/2/koenigsegg-logo-png_seeklogo-408053.png" alt="Koenigsegg Logo">
+            </a>
+            Koenigsegg
+        </div>
+        <nav id="nav">
+            <!-- Navigation links -->
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <!-- Hamburger menu for mobile navigation -->
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ====== HERO SECTION: Welcome Banner ====== -->
+        <section class="hero">
+            <h1>Welcome to Our Hyper Car Collections</h1>
+            <p>This page adjusts seamlessly across all devices.</p>
+        </section>
+
+        <!-- ====== CARDS SECTION: Koenigsegg Models ====== -->
+        <section class="cards">
+            <!-- Card 1: Koenigsegg Agera -->
+            <div class="card">
+                <img src="assets/agera.jpg" alt="Koenigsegg Agera">
+                <p class="model-name">Koenigsegg Agera</p>
+                <ul class="card-bullets">
+                    <li>Top speed: 447 km/h (278 mph)</li>
+                    <li>5.0L twin-turbo V8 engine</li>
+                    <li>Carbon fiber monocoque chassis</li>
+                </ul>
+            </div>
+            <!-- Card 2: Koenigsegg CCXR -->
+            <div class="card">
+                <img src="assets/ccxr.jpg" alt="Koenigsegg CCXR">
+                <p class="model-name">Koenigsegg CCXR</p>
+                <ul class="card-bullets">
+                    <li>Biofuel-capable supercar</li>
+                    <li>1,018 hp on E85 ethanol</li>
+                    <li>Limited production: 25 units</li>
+                </ul>
+            </div>
+            <!-- Card 3: Koenigsegg Gemera -->
+            <div class="card">
+                <img src="assets/g.jpg" alt="Koenigsegg Gemera">
+                <p class="model-name">Koenigsegg Gemera</p>
+                <ul class="card-bullets">
+                    <li>First 4-seater Koenigsegg</li>
+                    <li>1,700 hp hybrid powertrain</li>
+                    <li>0–100 km/h in 1.9 seconds</li>
+                </ul>
+            </div>
+            <!-- Card 4: Koenigsegg Jesko -->
+            <div class="card">
+                <img src="assets/jesko.jpg" alt="Koenigsegg Jesko">
+                <p class="model-name">Koenigsegg Jesko</p>
+                <ul class="card-bullets">
+                    <li>Designed for track dominance</li>
+                    <li>Up to 1,600 hp on E85</li>
+                    <li>Advanced active aerodynamics</li>
+                </ul>
+            </div>
+            <!-- Card 5: Koenigsegg Regera -->
+            <div class="card">
+                <img src="assets/regera.jpg" alt="Koenigsegg Regera">
+                <p class="model-name">Koenigsegg Regera</p>
+                <ul class="card-bullets">
+                    <li>Direct Drive hybrid system</li>
+                    <li>Combined 1,500+ hp output</li>
+                    <li>Luxurious, high-tech interior</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- ====== FOOTER: Copyright Notice ====== -->
+    <footer>
+        <p>© 2025 Koenigsegg. All rights reserved.</p>
+    </footer>
+
+    <!-- ====== CARD MODAL: Pop-up for Card Details ====== -->
+    <div id="card-modal" class="card-modal">
+        <div class="card-modal-content">
+            <span class="card-modal-close" id="cardModalClose">&times;</span>
+            <img id="modalImg" src="" alt="Card Image">
+            <h2 id="modalTitle"></h2>
+        </div>
+    </div>
+
+    <!-- ====== SCRIPTS: Interactivity for Cards and Navigation ====== -->
+    <script src="script.js"></script>
+    <script>
+    // Card hover 3D tilt & glow effect
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * 10;
+            const rotateY = ((x - centerX) / centerX) * 10;
+            card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
+            card.style.boxShadow = `${-rotateY*2}px ${rotateX*2}px 32px 0 #0099cc55, 0 2px 16px #0008`;
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = '';
+            card.style.boxShadow = '';
+        });
+        card.addEventListener('mouseenter', () => {
+            card.style.transition = 'transform 0.2s, box-shadow 0.2s';
+        });
+    });
+
+    // Card click ripple effect and modal pop-up
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            // Ripple effect
+            let ripple = document.createElement('span');
+            ripple.className = 'card-ripple';
+            ripple.style.left = `${e.offsetX}px`;
+            ripple.style.top = `${e.offsetY}px`;
+            card.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+
+            // Pop-up modal logic
+            const img = card.querySelector('img');
+            const text = card.querySelector('p');
+            document.getElementById('modalImg').src = img.src;
+            document.getElementById('modalImg').alt = img.alt;
+            document.getElementById('modalTitle').textContent = text.textContent;
+            document.getElementById('card-modal').classList.add('show');
+        });
+    });
+
+    // Modal close logic
+    document.getElementById('cardModalClose').onclick = function() {
+        document.getElementById('card-modal').classList.remove('show');
+    };
+    window.onclick = function(event) {
+        const modal = document.getElementById('card-modal');
+        if (event.target === modal) {
+            modal.classList.remove('show');
+        }
+    };
+
+    // Hamburger menu toggle for navigation
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    menuToggle.onclick = function() {
+        navLinks.classList.toggle('open');
+        menuToggle.classList.toggle('open');
+    };
+    window.addEventListener('resize', () => {
+        if(window.innerWidth > 768) {
+            navLinks.classList.remove('open');
+            menuToggle.classList.remove('open');
+        }
+    });
+    </script>
+</body>
+</html>
